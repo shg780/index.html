@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استبيان: دراسة الوضع الراهن لتمكين الذكاء الاصطناعي في المركز الإحصائي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f4f7f6;
+        }
+
+        .custom-radio {
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.15em;
+            height: 1.15em;
+            border: 0.15em solid #9ca3af;
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
+        }
+
+        .custom-radio::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--radio-color, #2563eb);
+        }
+
+        .custom-radio:checked::before {
+            transform: scale(1);
+        }
+        
+        .custom-radio:checked {
+            border-color: #2563eb;
+        }
+
+        .custom-checkbox {
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.15em;
+            height: 1.15em;
+            border: 0.15em solid #9ca3af;
+            border-radius: 0.25em;
+            display: grid;
+            place-content: center;
+        }
+
+        .custom-checkbox::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--checkbox-color, #2563eb);
+            transform-origin: bottom left;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        .custom-checkbox:checked::before {
+            transform: scale(1);
+        }
+        
+        .custom-checkbox:checked {
+            border-color: #2563eb;
+        }
+
+        .form-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        
+        .rating-group {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        .rating-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        .rating-label span {
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
+
+    <div class="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
+        <!-- Header Banner -->
+        <div class="bg-gradient-to-r from-green-700 to-teal-800 text-white p-8 text-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-black opacity-10"></div>
+            <div class="relative z-10">
+                <h1 class="text-3xl font-extrabold mb-3">استبيان تمكين الذكاء الاصطناعي</h1>
+                <p class="text-blue-100 text-lg font-medium">المركز الإحصائي لدول مجلس التعاون لدول الخليج العربية</p>
+            </div>
+        </div>
+
+        <!-- Intro Content -->
+        <div class="p-8 border-b border-gray-100">
+            <div class="flex items-start space-x-4 space-x-reverse mb-6">
+                <div class="flex-shrink-0 bg-blue-100 p-3 rounded-full">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">الهدف من الاستبيان</h2>
+                    <p class="text-gray-600 leading-relaxed text-sm">
+                        يهدف هذا الاستبيان إلى تقييم مستوى الوعي والاستخدام والجاهزية لتبني تقنيات الذكاء الاصطناعي لدى موظفي وإدارات المركز، وتحديد مجالات الاستخدام ذات الأولوية، والتحديات والاحتياجات التدريبية والتقنية والتنظيمية، لدعم إعداد خطة مؤسسية لتمكين الذكاء الاصطناعي ورفع كفاءة العمل الإحصائي والإداري.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="mt-8">
+                <div class="flex justify-between text-xs font-semibold text-gray-500 mb-2">
+                    <span>التقدم</span>
+                    <span id="progress-text">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="progress-bar" class="bg-blue-600 h-2 rounded-full progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <form id="ai-survey-form" class="p-8">
+            
+            <!-- Section 0: البيانات العامة -->
+            <div class="form-section active" id="section-0">
+                <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 ml-3 text-sm">1</span>
+                    البيانات العامة (للتصنيف فقط)
+                </h3>
+                
+                <div class="space-y-6">
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                        <label class="block text-gray-700 font-bold mb-2" for="department">الإدارة / القسم:</label>
+                        <select id="department" name="department" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-white">
+                            <option value="" disabled selected>اختر الإدارة أو القسم...</option>
+                            <option value="مكتب المدير العام">1. مكتب المدير العام</option>
+                            <option value="إدارة التواصل والإعلام">2. إدارة التواصل والإعلام</option>
+                            <option value="إدارة الإحصاءات الاقتصادية">3. إدارة الإحصاءات الاقتصادية</option>
+                            <option value="إدارة الإحصاءات السكانية والاجتماعية">4. إدارة الإحصاءات السكانية والاجتماعية</option>
+                            <option value="إدارة الدراسات ومؤشرات التنمية">5. إدارة الدراسات ومؤشرات التنمية</option>
+                            <option value="إدارة الإحصاءات الجغرافية والبيئة">6. إدارة الإحصاءات الجغرافية والبيئة والسياحة والطاقة</option>
+                            <option value="إدارة اللجان والدعم الفني">7. إدارة اللجان والدعم الفني</option>
+                            <option value="إدارة تقنية المعلومات">8. إدارة تقنية المعلومات</option>
+                            <option value="إدارة الموارد المالية والبشرية">9. إدارة الموارد المالية والبشرية</option>
+                            <option value="إدارة المشاريع">10. إدارة المشاريع</option>
+                        </select>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                        <label class="block text-gray-700 font-bold mb-3">طبيعة العمل: <span class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="job_type" value="supervisory" class="custom-radio mt-1" required>
+                                <span class="text-gray-700 text-sm leading-snug">وظائف إشرافية<br><span class="text-xs text-gray-500">(مدير عام، مدير إدارة، رئيس قسم)</span></span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="job_type" value="consultant" class="custom-radio">
+                                <span class="text-gray-700 text-sm">مستشار</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="job_type" value="expert" class="custom-radio">
+                                <span class="text-gray-700 text-sm">خبير</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="job_type" value="statistics" class="custom-radio">
+                                <span class="text-gray-700 text-sm">إحصاء</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="job_type" value="tech_services" class="custom-radio">
+                                <span class="text-gray-700 text-sm">خدمات تقنية</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="job_type" value="design" class="custom-radio">
+                                <span class="text-gray-700 text-sm">تصميم</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="job_type" value="admin_services" class="custom-radio">
+                                <span class="text-gray-700 text-sm">خدمات إدارية</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="job_type" value="media" class="custom-radio">
+                                <span class="text-gray-700 text-sm">إعلام وتواصل</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="job_type" value="finance" class="custom-radio">
+                                <span class="text-gray-700 text-sm">خدمات مالية</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="job_type" value="support" class="custom-radio">
+                                <span class="text-gray-700 text-sm">خدمات مساندة</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                        <label class="block text-gray-700 font-bold mb-3">سنوات الخبرة في المركز: <span class="text-red-500">*</span></label>
+                        <div class="flex flex-col sm:flex-row gap-4 flex-wrap">
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-3 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="experience" value="less_5" class="custom-radio" required>
+                                <span class="text-gray-700">أقل من 5 سنوات</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-3 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="experience" value="5_to_10" class="custom-radio">
+                                <span class="text-gray-700">5–10 سنوات</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-3 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="experience" value="11_to_15" class="custom-radio">
+                                <span class="text-gray-700">11–15 سنة</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-3 rounded-lg hover:bg-gray-100 transition">
+                                <input type="radio" name="experience" value="more_15" class="custom-radio">
+                                <span class="text-gray-700">أكثر من 15 سنة</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <button type="button" class="next-btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition duration-200 flex items-center">
+                        التالي
+                        <svg class="w-5 h-5 mr-2 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Section 1: على مستوى الموظف -->
+            <div class="form-section" id="section-1">
+                <h3 class="text-xl font-bold text-gray-800 mb-2 flex items-center">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 ml-3 text-sm">2</span>
+                    القسم الأول: على مستوى الموظف
+                </h3>
+                <p class="text-gray-500 text-sm mb-6 mr-11">الاستخدام الشخصي والوعي: يركز هذا القسم على تجربتك الفردية ومدى استخدامك لأدوات الذكاء الاصطناعي في مهامك اليومية.</p>
+                
+                <div class="space-y-6">
+                    
+                    <!-- Q1 -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <label class="block text-gray-800 font-bold mb-4">1. كيف تقيم مستوى معرفتك وفهمك لتقنيات الذكاء الاصطناعي التوليدي؟ <span class="text-red-500">*</span></label>
+                        <div class="space-y-3">
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q1_knowledge" value="none" class="custom-radio mt-1 flex-shrink-0" required>
+                                <span class="block text-gray-800 font-medium">لم اسمع عنها</span>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q1_knowledge" value="beginner" class="custom-radio mt-1 flex-shrink-0">
+                                <div>
+                                    <span class="block text-gray-800 font-medium">مبتدئ:</span>
+                                    <span class="block text-gray-500 text-sm">لدي معرفة محدودة بالمفاهيم والأدوات.</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q1_knowledge" value="basic" class="custom-radio mt-1 flex-shrink-0">
+                                <div>
+                                    <span class="block text-gray-800 font-medium">أساسي:</span>
+                                    <span class="block text-gray-500 text-sm">أفهم الاستخدامات الأساسية وأستخدم بعض الأدوات عند الحاجة.</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q1_knowledge" value="advanced" class="custom-radio mt-1 flex-shrink-0">
+                                <div>
+                                    <span class="block text-gray-800 font-medium">متقدم:</span>
+                                    <span class="block text-gray-500 text-sm">أستخدم أدوات الذكاء الاصطناعي بانتظام في إنجاز مهامي.</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q1_knowledge" value="expert" class="custom-radio mt-1 flex-shrink-0">
+                                <div>
+                                    <span class="block text-gray-800 font-medium">خبير:</span>
+                                    <span class="block text-gray-500 text-sm">أستخدم تقنيات الذكاء الاصطناعي بصورة متقدمة، مثل البرمجة، والتحليل، وبناء النماذج أو دمجها في إجراءات العمل وغيرها.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <label class="block text-gray-800 font-bold mb-4">2. ما هو معدل استخدامك لأدوات الذكاء الاصطناعي في إنجاز مهامك الوظيفية الحالية؟ <span class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-3 border rounded-lg hover:bg-blue-50 hover:border-blue-300 transition">
+                                <input type="radio" name="q2_frequency" value="daily" class="custom-radio" required>
+                                <span class="text-gray-700">يومياً</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-3 border rounded-lg hover:bg-blue-50 hover:border-blue-300 transition">
+                                <input type="radio" name="q2_frequency" value="weekly" class="custom-radio">
+                                <span class="text-gray-700">عدة مرات في الأسبوع</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-3 border rounded-lg hover:bg-blue-50 hover:border-blue-300 transition">
+                                <input type="radio" name="q2_frequency" value="rarely" class="custom-radio">
+                                <span class="text-gray-700">نادراً</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-3 border rounded-lg hover:bg-blue-50 hover:border-blue-300 transition">
+                                <input type="radio" name="q2_frequency" value="never" class="custom-radio">
+                                <span class="text-gray-700">لم أستخدمها قط</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div id="q3-container" class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <label class="block text-gray-800 font-bold mb-2">3. في أي من المهام التالية تعتمد على الذكاء الاصطناعي؟</label>
+                        <span class="text-xs text-blue-600 block mb-4">يمكن اختيار أكثر من إجابة</span>
+                        <div class="space-y-3">
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q3_tasks" value="data_viz" class="custom-checkbox mt-1 flex-shrink-0">
+                                <div>
+                                    <span class="block text-gray-800 font-medium">تحليل البيانات والتصوير الفني</span>
+                                    <span class="block text-gray-500 text-sm">تصميم الرسوم البيانية، الإنفوجرافيك، لوحات البيانات.</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q3_tasks" value="coding" class="custom-checkbox mt-1 flex-shrink-0">
+                                <div>
+                                    <span class="block text-gray-800 font-medium">الدعم البرمجي</span>
+                                    <span class="block text-gray-500 text-sm">المساعدة في كتابة الأكواد، الخوارزميات، وتطوير المنصات.</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q3_tasks" value="drafting" class="custom-checkbox mt-1 flex-shrink-0">
+                                <div>
+                                    <span class="block text-gray-800 font-medium">الصياغة والتوثيق</span>
+                                    <span class="block text-gray-500 text-sm">إعداد التقارير التحليلية، المذكرات الإدارية، وتلخيص الاجتماعات.</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q3_tasks" value="automation" class="custom-checkbox mt-1 flex-shrink-0">
+                                <div>
+                                    <span class="block text-gray-800 font-medium">أتمتة المهام اليومية</span>
+                                    <span class="block text-gray-500 text-sm">تنظيم الجداول، البحث، والمراسلات.</span>
+                                </div>
+                            </label>
+                            <!-- خيار أخرى -->
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" id="q3_other_cb" name="q3_tasks" value="other" class="custom-checkbox mt-1 flex-shrink-0">
+                                <div class="w-full">
+                                    <span class="block text-gray-800 font-medium">أخرى (يرجى التحديد)</span>
+                                    <input type="text" id="q3_other_text" name="q3_tasks_other_text" class="mt-2 w-full p-2 border border-gray-300 rounded-lg hidden focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="اكتب هنا المجالات الأخرى...">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q4 (4.1 and 4.2) -->
+                    <div id="q4-container" class="space-y-6">
+                        <!-- Q4.1 -->
+                        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                            <label class="block text-gray-800 font-bold mb-4">4.1 كيف تقيم أثر استخدام الذكاء الاصطناعي على كفاءة إنجاز مهامك؟ <span class="text-red-500">*</span></label>
+                            <div class="space-y-3">
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                    <input type="radio" name="q4_1_impact" value="very_high" class="custom-radio">
+                                    <span class="text-gray-700">أثر كبير جدًا</span>
+                                </label>
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                    <input type="radio" name="q4_1_impact" value="high" class="custom-radio">
+                                    <span class="text-gray-700">أثر كبير</span>
+                                </label>
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                    <input type="radio" name="q4_1_impact" value="medium" class="custom-radio">
+                                    <span class="text-gray-700">أثر متوسط</span>
+                                </label>
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                    <input type="radio" name="q4_1_impact" value="low" class="custom-radio">
+                                    <span class="text-gray-700">أثر محدود</span>
+                                </label>
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                    <input type="radio" name="q4_1_impact" value="none" id="q4_1_impact_none" class="custom-radio">
+                                    <span class="text-gray-700">لا يوجد أثر ملحوظ</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Q4.2 -->
+                        <div id="q4-2-container" class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                            <label class="block text-gray-800 font-bold mb-2">4.2 ما أبرز جوانب التحسن؟</label>
+                            <span class="text-xs text-blue-600 block mb-4">يمكن اختيار أكثر من إجابة</span>
+                            <div class="space-y-3">
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                    <input type="checkbox" name="q4_2_improvements" value="time" class="custom-checkbox">
+                                    <span class="text-gray-700">توفير الوقت</span>
+                                </label>
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                    <input type="checkbox" name="q4_2_improvements" value="quality" class="custom-checkbox">
+                                    <span class="text-gray-700">تحسين جودة المخرجات</span>
+                                </label>
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                    <input type="checkbox" name="q4_2_improvements" value="search" class="custom-checkbox">
+                                    <span class="text-gray-700">تسريع البحث</span>
+                                </label>
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                    <input type="checkbox" name="q4_2_improvements" value="analysis" class="custom-checkbox">
+                                    <span class="text-gray-700">دعم التحليل</span>
+                                </label>
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                    <input type="checkbox" name="q4_2_improvements" value="repetition" class="custom-checkbox">
+                                    <span class="text-gray-700">تقليل الأعمال المتكررة</span>
+                                </label>
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                    <input type="checkbox" name="q4_2_improvements" value="decision" class="custom-checkbox">
+                                    <span class="text-gray-700">دعم اتخاذ القرار</span>
+                                </label>
+                                <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                    <input type="checkbox" id="q4_2_other_cb" name="q4_2_improvements" value="other" class="custom-checkbox mt-1 flex-shrink-0">
+                                    <div class="w-full">
+                                        <span class="block text-gray-700">أخرى (يرجى التحديد)</span>
+                                        <input type="text" id="q4_2_other_text" name="q4_2_other_text" class="mt-2 w-full p-2 border border-gray-300 rounded-lg hidden focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="اكتب جوانب التحسن الأخرى...">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <label class="block text-gray-800 font-bold mb-2">5. ما هي أبرز التحديات التي تعيق استخدامك الأمثل للذكاء الاصطناعي على المستوى الشخصي؟</label>
+                        <span class="text-xs text-blue-600 block mb-4">يمكن اختيار أكثر من إجابة</span>
+                        <div class="space-y-3">
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q5_challenges" value="security" class="custom-checkbox mt-1 flex-shrink-0">
+                                <span class="text-gray-700">المخاوف المتعلقة بأمن البيانات والخصوصية.</span>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q5_challenges" value="tools" class="custom-checkbox mt-1 flex-shrink-0">
+                                <span class="text-gray-700">عدم توفر بيئة عمل أو اشتراكات مؤسسية مدعومة من المركز.</span>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q5_challenges" value="policy" class="custom-checkbox mt-1 flex-shrink-0">
+                                <span class="text-gray-700">غياب التوجيهات أو السياسات الواضحة حول ما يُسمح باستخدامه.</span>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q5_challenges" value="quality" class="custom-checkbox mt-1 flex-shrink-0">
+                                <span class="text-gray-700">ضعف جودة المخرجات باللغة العربية أو عدم دقة الأرقام الإحصائية المُولَّدة.</span>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q5_challenges" value="skills" class="custom-checkbox mt-1 flex-shrink-0">
+                                <span class="text-gray-700">نقص المعرفة أو المهارات اللازمة لاستخدام أدوات الذكاء الاصطناعي بفعالية.</span>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q5_challenges" value="verification" class="custom-checkbox mt-1 flex-shrink-0">
+                                <span class="text-gray-700">صعوبة التحقق من دقة وموثوقية المخرجات.</span>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" id="q5_other_cb" name="q5_challenges" value="other" class="custom-checkbox mt-1 flex-shrink-0">
+                                <div class="w-full">
+                                    <span class="block text-gray-700">أخرى (يرجى التحديد)</span>
+                                    <input type="text" id="q5_other_text" name="q5_challenges_other_text" class="mt-2 w-full p-2 border border-gray-300 rounded-lg hidden focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="اكتب التحديات الأخرى هنا...">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <label class="block text-gray-800 font-bold mb-2">6. ما المجالات التي تحتاج إلى تطوير معرفتك أو مهاراتك فيها؟</label>
+                        <span class="text-xs text-blue-600 block mb-4">يمكن اختيار أكثر من إجابة</span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q6_skills" value="basics" class="custom-checkbox">
+                                <span class="text-gray-700">أساسيات الذكاء الاصطناعي</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q6_skills" value="effective_use" class="custom-checkbox">
+                                <span class="text-gray-700">الاستخدام الفعال لأدوات الذكاء الاصطناعي التوليدي</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q6_skills" value="prompting" class="custom-checkbox">
+                                <span class="text-gray-700">كتابة التعليمات Prompting</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q6_skills" value="data_analysis" class="custom-checkbox">
+                                <span class="text-gray-700">تحليل البيانات</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q6_skills" value="programming" class="custom-checkbox">
+                                <span class="text-gray-700">البرمجة</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q6_skills" value="automation" class="custom-checkbox">
+                                <span class="text-gray-700">أتمتة المهام</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q6_skills" value="verification" class="custom-checkbox">
+                                <span class="text-gray-700">التحقق من جودة المخرجات</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q6_skills" value="security" class="custom-checkbox">
+                                <span class="text-gray-700">أمن وخصوصية البيانات</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="checkbox" name="q6_skills" value="apps" class="custom-checkbox">
+                                <span class="text-gray-700">تطبيقات الذكاء الاصطناعي في العمل</span>
+                            </label>
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50 col-span-1 md:col-span-2">
+                                <input type="checkbox" id="q6_other_cb" name="q6_skills" value="other" class="custom-checkbox mt-1 flex-shrink-0">
+                                <div class="w-full">
+                                    <span class="block text-gray-700">أخرى (يرجى التحديد)</span>
+                                    <input type="text" id="q6_other_text" name="q6_skills_other_text" class="mt-2 w-full p-2 border border-gray-300 rounded-lg hidden focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="اكتب المجالات الأخرى هنا...">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button type="button" class="prev-btn bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center">
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        السابق
+                    </button>
+                    <button type="button" class="next-btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition duration-200 flex items-center">
+                        التالي
+                        <svg class="w-5 h-5 mr-2 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Section 2: على مستوى الإدارة -->
+            <div class="form-section" id="section-2">
+                <h3 class="text-xl font-bold text-gray-800 mb-2 flex items-center">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 ml-3 text-sm">3</span>
+                    القسم الثاني: على مستوى الإدارة
+                </h3>
+                <p class="text-gray-500 text-sm mb-6 mr-11">التكامل والجاهزية المؤسسية: يركز هذا القسم على تقييم مدى جاهزية إدارتك لتبني الذكاء الاصطناعي كجزء من إجراءات العمل القياسية.</p>
+
+                <div class="space-y-6">
+                    
+                    <!-- Q7 -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <label class="block text-gray-800 font-bold mb-4">7. إلى أي مدى تدعم إدارتك المباشرة وتشجع على ابتكار طرق جديدة للعمل باستخدام الذكاء الاصطناعي؟ <span class="text-red-500">*</span></label>
+                        <div class="space-y-3">
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q7_support" value="high" class="custom-radio" required>
+                                <span class="text-gray-700">تدعم وتشجع بشكل كبير جداً</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q7_support" value="neutral" class="custom-radio">
+                                <span class="text-gray-700">محايدة (لا تمنع ولكن لا تشجع بشكل منهجي)</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q7_support" value="resistance" class="custom-radio">
+                                <span class="text-gray-700">يوجد تحفظ أو ممانعة لاعتماد هذه التقنيات</span>
+                            </label>
+                            <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q7_support" value="none" class="custom-radio">
+                                <span class="text-gray-700">لا توجد سياسة واضحة على مستوى الإدارة</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q8 -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <label class="block text-gray-800 font-bold mb-2">8. بحسب طبيعة عمل إدارتك، ما هي المجالات ذات الأولوية القصوى التي يجب أتمتتها أو دعمها بالذكاء الاصطناعي؟</label>
+                        <span class="text-xs text-blue-600 block mb-4">يمكن اختيار أكثر من إجابة (تظهر الخيارات بناءً على طبيعة عملك المحددة في البداية)</span>
+                        
+                        <div id="q8-options-wrapper" class="grid gap-6">
+                            <!-- الإدارات الإحصائية -->
+                            <div id="q8-stat-container" class="bg-blue-50/50 p-4 rounded-lg border border-blue-100 hidden">
+                                <h4 class="font-bold text-blue-800 mb-3 text-sm">للإدارات الإحصائية:</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" name="q8_stat" value="cleaning" class="custom-checkbox">
+                                        <span class="text-gray-700 text-sm">تنظيف ومعالجة البيانات</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" name="q8_stat" value="quality" class="custom-checkbox">
+                                        <span class="text-gray-700 text-sm">التحقق من الجودة واكتشاف القيم الشاذة</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" name="q8_stat" value="coding" class="custom-checkbox">
+                                        <span class="text-gray-700 text-sm">التصنيف والترميز الآلي</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" name="q8_stat" value="linking" class="custom-checkbox">
+                                        <span class="text-gray-700 text-sm">الربط بين مصادر البيانات</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" name="q8_stat" value="modeling" class="custom-checkbox">
+                                        <span class="text-gray-700 text-sm">التحليل والنمذجة والتنبؤ</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" name="q8_stat" value="indicators" class="custom-checkbox">
+                                        <span class="text-gray-700 text-sm">إعداد المؤشرات</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" name="q8_stat" value="reporting" class="custom-checkbox">
+                                        <span class="text-gray-700 text-sm">توليد التقارير</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" name="q8_stat" value="research" class="custom-checkbox">
+                                        <span class="text-gray-700 text-sm">البحث في المنهجيات والمراجع</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" name="q8_stat" value="dashboards" class="custom-checkbox">
+                                        <span class="text-gray-700 text-sm">إعداد التصورات ولوحات البيانات</span>
+                                    </label>
+                                    <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-1 col-span-1 sm:col-span-2">
+                                        <input type="checkbox" id="q8_stat_other_cb" name="q8_stat" value="other" class="custom-checkbox mt-1">
+                                        <div class="w-full">
+                                            <span class="text-gray-700 text-sm block">أخرى (يرجى التحديد)</span>
+                                            <input type="text" id="q8_stat_other_text" name="q8_stat_other_text" class="mt-2 w-full p-2 border border-blue-200 rounded-lg hidden focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="اكتب هنا...">
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- الإدارات الداعمة -->
+                            <div id="q8-admin-container" class="bg-indigo-50/50 p-4 rounded-lg border border-indigo-100 hidden">
+                                <h4 class="font-bold text-indigo-800 mb-3 text-sm">للإدارات الداعمة والإدارية:</h4>
+                                <div class="space-y-2">
+                                    <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" name="q8_admin" value="comm" class="custom-checkbox mt-1">
+                                        <span class="text-gray-700 text-sm">تطوير التواصل الداخلي (أتمتة الإشعارات وإنجازات الموظفين).</span>
+                                    </label>
+                                    <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" name="q8_admin" value="hr" class="custom-checkbox mt-1">
+                                        <span class="text-gray-700 text-sm">تسريع إجراءات الموارد البشرية والشؤون المالية والمقترحات.</span>
+                                    </label>
+                                    <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" name="q8_admin" value="archive" class="custom-checkbox mt-1">
+                                        <span class="text-gray-700 text-sm">أرشفة الوثائق واسترجاع المعلومات من قواعد البيانات الداخلية ذكياً.</span>
+                                    </label>
+                                    <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-1">
+                                        <input type="checkbox" id="q8_admin_other_cb" name="q8_admin" value="other" class="custom-checkbox mt-1">
+                                        <div class="w-full">
+                                            <span class="text-gray-700 text-sm block">أخرى (يرجى التحديد)</span>
+                                            <input type="text" id="q8_admin_other_text" name="q8_admin_other_text" class="mt-2 w-full p-2 border border-indigo-200 rounded-lg hidden focus:ring-2 focus:ring-indigo-500 outline-none text-sm" placeholder="اكتب هنا...">
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q9 -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <label class="block text-gray-800 font-bold mb-4">9. كيف تقيم جاهزية البيانات في إدارتك للاستخدام في تطبيقات الذكاء الاصطناعي من حيث التنظيم، الجودة، الرقمنة، سهولة الوصول، والتكامل؟ <span class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                            <label class="flex items-center justify-center space-x-2 space-x-reverse cursor-pointer p-3 border rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="q9_data" value="excellent" class="custom-radio" required>
+                                <span class="text-gray-700 font-medium">ممتازة</span>
+                            </label>
+                            <label class="flex items-center justify-center space-x-2 space-x-reverse cursor-pointer p-3 border rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="q9_data" value="good" class="custom-radio">
+                                <span class="text-gray-700 font-medium">جيدة</span>
+                            </label>
+                            <label class="flex items-center justify-center space-x-2 space-x-reverse cursor-pointer p-3 border rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="q9_data" value="medium" class="custom-radio">
+                                <span class="text-gray-700 font-medium">متوسطة</span>
+                            </label>
+                            <label class="flex items-center justify-center space-x-2 space-x-reverse cursor-pointer p-3 border rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="q9_data" value="poor" class="custom-radio">
+                                <span class="text-gray-700 font-medium">ضعيفة</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q10 -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <label class="block text-gray-800 font-bold mb-2">10. ما هي المتطلبات الأساسية التي تحتاجها إدارتك للبدء في التطبيق الفعال للذكاء الاصطناعي؟ <span class="text-red-500">*</span></label>
+                        <span class="text-xs text-blue-600 block mb-6">يرجى تقييم درجة الأهمية لكل خيار (1 = غير مهم، 5 = مهم جداً)</span>
+                        
+                        <div class="space-y-4">
+                            <!-- Requirement 1 -->
+                            <div class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
+                                <span class="mb-3 md:mb-0 text-sm font-medium text-gray-700 md:w-1/2">توفير رخص واشتراكات مؤسسية لأدوات الذكاء الاصطناعي المتقدمة (AI Pro).</span>
+                                <div class="rating-group">
+                                    <label class="rating-label"><input type="radio" name="q10_req_1" value="5" class="custom-radio" required><span>5</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_1" value="4" class="custom-radio"><span>4</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_1" value="3" class="custom-radio"><span>3</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_1" value="2" class="custom-radio"><span>2</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_1" value="1" class="custom-radio"><span>1</span></label>
+                                </div>
+                            </div>
+                            <!-- Requirement 2 -->
+                            <div class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
+                                <span class="mb-3 md:mb-0 text-sm font-medium text-gray-700 md:w-1/2">تنفيذ برامج تدريبية متخصصة وموجهة لطبيعة عمل كل إدارة.</span>
+                                <div class="rating-group">
+                                    <label class="rating-label"><input type="radio" name="q10_req_2" value="5" class="custom-radio" required><span>5</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_2" value="4" class="custom-radio"><span>4</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_2" value="3" class="custom-radio"><span>3</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_2" value="2" class="custom-radio"><span>2</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_2" value="1" class="custom-radio"><span>1</span></label>
+                                </div>
+                            </div>
+                            <!-- Requirement 3 -->
+                            <div class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
+                                <span class="mb-3 md:mb-0 text-sm font-medium text-gray-700 md:w-1/2">إصدار دليل حوكمة لاستخدام الذكاء الاصطناعي يضمن موثوقية الأرقام والمخرجات.</span>
+                                <div class="rating-group">
+                                    <label class="rating-label"><input type="radio" name="q10_req_3" value="5" class="custom-radio" required><span>5</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_3" value="4" class="custom-radio"><span>4</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_3" value="3" class="custom-radio"><span>3</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_3" value="2" class="custom-radio"><span>2</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_3" value="1" class="custom-radio"><span>1</span></label>
+                                </div>
+                            </div>
+                            <!-- Requirement 4 -->
+                            <div class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
+                                <span class="mb-3 md:mb-0 text-sm font-medium text-gray-700 md:w-1/2">استقطاب أو تكليف خبراء ومستشارين تقنيين لقيادة التحول داخل الإدارة.</span>
+                                <div class="rating-group">
+                                    <label class="rating-label"><input type="radio" name="q10_req_4" value="5" class="custom-radio" required><span>5</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_4" value="4" class="custom-radio"><span>4</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_4" value="3" class="custom-radio"><span>3</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_4" value="2" class="custom-radio"><span>2</span></label>
+                                    <label class="rating-label"><input type="radio" name="q10_req_4" value="1" class="custom-radio"><span>1</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q11 -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <label class="block text-gray-800 font-bold mb-4">11. ما مدى وضوح الضوابط الحالية المتعلقة باستخدام الذكاء الاصطناعي في العمل؟ <span class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q11_controls" value="very_clear" class="custom-radio" required>
+                                <span class="text-gray-700 text-sm">واضحة جدًا</span>
+                            </label>
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q11_controls" value="somewhat_clear" class="custom-radio">
+                                <span class="text-gray-700 text-sm">واضحة إلى حد ما</span>
+                            </label>
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q11_controls" value="unclear" class="custom-radio">
+                                <span class="text-gray-700 text-sm">غير واضحة</span>
+                            </label>
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q11_controls" value="none" class="custom-radio">
+                                <span class="text-gray-700 text-sm">لا توجد ضوابط معروفة</span>
+                            </label>
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input type="radio" name="q11_controls" value="dont_know" class="custom-radio">
+                                <span class="text-gray-700 text-sm">لا أعلم</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q12 -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <label class="block text-gray-800 font-bold mb-4">12. ما مدى ثقتك في استخدام مخرجات الذكاء الاصطناعي بعد مراجعتها والتحقق منها؟ <span class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                            <label class="flex items-center justify-center space-x-2 space-x-reverse cursor-pointer p-3 border rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="q12_trust" value="excellent" class="custom-radio" required>
+                                <span class="text-gray-700 font-medium">ممتازة</span>
+                            </label>
+                            <label class="flex items-center justify-center space-x-2 space-x-reverse cursor-pointer p-3 border rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="q12_trust" value="good" class="custom-radio">
+                                <span class="text-gray-700 font-medium">جيدة</span>
+                            </label>
+                            <label class="flex items-center justify-center space-x-2 space-x-reverse cursor-pointer p-3 border rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="q12_trust" value="medium" class="custom-radio">
+                                <span class="text-gray-700 font-medium">متوسطة</span>
+                            </label>
+                            <label class="flex items-center justify-center space-x-2 space-x-reverse cursor-pointer p-3 border rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="q12_trust" value="poor" class="custom-radio">
+                                <span class="text-gray-700 font-medium">ضعيفة</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q13 -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <label class="block text-gray-800 font-bold mb-2" for="q13_suggestions">13. مساحة حرة للمقترحات (اختياري):</label>
+                        <p class="text-gray-500 text-sm mb-4">هل لديك أي مقترحات محددة أو مشاريع مبتكرة تعتقد أن المركز الإحصائي يجب أن يتبناها باستخدام الذكاء الاصطناعي في الفترة القادمة؟</p>
+                        <textarea id="q13_suggestions" name="q13_suggestions" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" placeholder="اكتب مقترحك هنا..."></textarea>
+                    </div>
+
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button type="button" class="prev-btn bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center">
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        السابق
+                    </button>
+                    <button type="button" id="submit-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition duration-200 flex items-center">
+                        إرسال الاستبيان
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <div class="form-section text-center py-12" id="section-success">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">شكراً لمشاركتك!</h3>
+                <p class="text-gray-600 mb-8">تم إرسال إجاباتك بنجاح. مساهمتك ستساعد في رسم خطة مؤسسية فعالة لتمكين الذكاء الاصطناعي في المركز الإحصائي.</p>
+                <button type="button" onclick="location.reload()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow transition">
+                    العودة للبداية
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-sm text-gray-400 mt-4">
+        &copy; 2026 المركز الإحصائي لدول مجلس التعاون لدول الخليج العربية - إدارة تقنية المعلومات
+    </div>
+
+    <script>
+        // =========================================================================
+        // 💡 تلميح: ضع بريدك الإلكتروني هنا لاستلام جميع الاستجابات فور إرسالها
+        // =========================================================================
+        let TARGET_EMAIL = "ialfarai@gccstat.org,shg780@gmail.com"; // <-- ضع إيميلك هنا (مثال: my.name@gccstat.org)
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.form-section');
+            const nextBtns = document.querySelectorAll('.next-btn');
+            const prevBtns = document.querySelectorAll('.prev-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            let currentSection = 0;
+            const totalSteps = 3; 
+
+            function updateProgress() {
+                let percent = 0;
+                if(currentSection === 0) percent = 10;
+                else if(currentSection === 1) percent = 50;
+                else if(currentSection === 2) percent = 100;
+                
+                progressBar.style.width = percent + '%';
+                progressText.textContent = percent + '%';
+            }
+
+            function showSection(index) {
+                sections.forEach((sec, i) => {
+                    if (i === index) sec.classList.add('active');
+                    else sec.classList.remove('active');
+                });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                updateProgress();
+            }
+
+            nextBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const currentSectionEl = sections[currentSection];
+                    const inputs = currentSectionEl.querySelectorAll('input[required], textarea[required], select[required]');
+                    let isValid = true;
+                    let firstInvalidInput = null;
+
+                    inputs.forEach(input => {
+                        if (input.offsetParent !== null) { 
+                            if (!input.checkValidity()) {
+                                isValid = false;
+                                if (!firstInvalidInput) firstInvalidInput = input;
+                                input.classList.add('border-red-500'); 
+                            } else {
+                                input.classList.remove('border-red-500');
+                            }
+                        }
+                    });
+
+                    const radioGroups = new Set();
+                    currentSectionEl.querySelectorAll('input[type="radio"][required]').forEach(radio => {
+                         if (radio.offsetParent !== null) radioGroups.add(radio.name);
+                    });
+
+                    radioGroups.forEach(name => {
+                        const checked = currentSectionEl.querySelector(`input[name="${name}"]:checked`);
+                        if (!checked) {
+                            isValid = false;
+                            const firstRadio = currentSectionEl.querySelector(`input[name="${name}"]`);
+                            if (!firstInvalidInput && firstRadio) firstInvalidInput = firstRadio;
+                        }
+                    });
+
+                    if (!isValid) {
+                         if(firstInvalidInput && firstInvalidInput.reportValidity) {
+                             firstInvalidInput.reportValidity();
+                         } else {
+                            const form = document.getElementById('ai-survey-form');
+                            form.reportValidity(); 
+                         }
+                        return; 
+                    }
+
+                    if (currentSection < totalSteps - 1) {
+                        currentSection++;
+                        showSection(currentSection);
+                    }
+                });
+            });
+
+            prevBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (currentSection > 0) {
+                        currentSection--;
+                        showSection(currentSection);
+                    }
+                });
+            });
+
+            function formatPayload(form) {
+                const formData = new FormData(form);
+                
+                const getRadioText = (name) => {
+                    const el = form.querySelector(`input[name="${name}"]:checked`);
+                    if(!el) return 'غير محدد';
+                    const label = el.closest('label');
+                    return label ? label.textContent.replace(/\s+/g, ' ').trim() : el.value;
+                };
+
+                const getCheckboxesText = (name, otherTextName) => {
+                    const els = form.querySelectorAll(`input[name="${name}"]:checked`);
+                    const values = [];
+                    els.forEach(el => {
+                        if(el.value === 'other' && otherTextName) {
+                            const otherInput = form.querySelector(`input[name="${otherTextName}"]`);
+                            if(otherInput && otherInput.value) {
+                                values.push(`أخرى: ${otherInput.value.trim()}`);
+                            } else {
+                                values.push('أخرى');
+                            }
+                        } else {
+                            const label = el.closest('label');
+                            values.push(label ? label.textContent.replace(/\s+/g, ' ').trim() : el.value);
+                        }
+                    });
+                    return values.length > 0 ? values.join(' | ') : 'لا يوجد';
+                };
+
+                const deptSelect = form.querySelector('#department');
+                const deptText = deptSelect ? deptSelect.options[deptSelect.selectedIndex].text : '';
+
+                return {
+                    "_subject": `استجابة استبيان جديدة: ${deptText || 'المركز الإحصائي'}`,
+                    "_template": "table",
+                    "_captcha": "false",
+                    "تاريخ الإرسال": new Date().toLocaleString('ar-OM'),
+                    "الإدارة / القسم": deptText,
+                    "طبيعة العمل": getRadioText('job_type'),
+                    "سنوات الخبرة": getRadioText('experience'),
+                    "1. مستوى المعرفة": getRadioText('q1_knowledge'),
+                    "2. معدل الاستخدام": getRadioText('q2_frequency'),
+                    "3. مجالات الاعتماد": getCheckboxesText('q3_tasks', 'q3_tasks_other_text'),
+                    "1.4 تقييم أثر الاستخدام": getRadioText('q4_1_impact'),
+                    "2.4 جوانب التحسن": getCheckboxesText('q4_2_improvements', 'q4_2_other_text'),
+                    "5. التحديات الشخصية": getCheckboxesText('q5_challenges', 'q5_challenges_other_text'),
+                    "6. مجالات التطوير المطلوبة": getCheckboxesText('q6_skills', 'q6_skills_other_text'),
+                    "7. دعم الإدارة المباشرة": getRadioText('q7_support'),
+                    "8. أولويات الإدارات الإحصائية": getCheckboxesText('q8_stat', 'q8_stat_other_text'),
+                    "8. أولويات الإدارات الداعمة": getCheckboxesText('q8_admin', 'q8_admin_other_text'),
+                    "9. جاهزية البيانات": getRadioText('q9_data'),
+                    "10.1 رخص واشتراكات مدفوعة": getRadioText('q10_req_1') + " / 5",
+                    "10.2 برامج تدريبية متخصصة": getRadioText('q10_req_2') + " / 5",
+                    "10.3 دليل حوكمة الأرقام": getRadioText('q10_req_3') + " / 5",
+                    "10.4 استقطاب خبراء تقنيين": getRadioText('q10_req_4') + " / 5",
+                    "11. وضوح الضوابط الحالية": getRadioText('q11_controls'),
+                    "12. الثقة في المخرجات": getRadioText('q12_trust'),
+                    "13. المقترحات والأفكار": form.querySelector('#q13_suggestions')?.value || 'لا يوجد'
+                };
+            }
+
+            submitBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const form = document.getElementById('ai-survey-form');
+                if(!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+
+                if (TARGET_EMAIL === "YOUR_EMAIL@EXAMPLE.COM") {
+                    const promptEmail = prompt("يرجى إدخال بريدك الإلكتروني الذي تريد استقبال الاستجابات عليه:", "");
+                    if (promptEmail && promptEmail.includes("@")) {
+                        TARGET_EMAIL = promptEmail.trim();
+                    } else {
+                        alert("يرجى كتابة بريد إلكتروني صحيح لتتمكن من استلام الإجابات.");
+                        return;
+                    }
+                }
+                
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<svg class="animate-spin h-5 w-5 mr-3 inline-block" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري الإرسال إلى بريدك...';
+                submitBtn.disabled = true;
+
+                const payload = formatPayload(form);
+
+                // --- 🛠️ تحديث لحل مشكلة الإرسال (CORS Error) في بيئة المعاينة ---
+                // بما أن بيئات العرض تمنع الاتصال بخوادم خارجية (CORS)، 
+                // سنقوم بإنشاء نموذج وهمي مخفي يتم إرساله بالطريقة التقليدية (HTML Form Submit)
+                // هذه الطريقة أضمن بنسبة 100% ولا تتأثر بحظر المتصفحات وتعمل فوراً مع FormSubmit.co
+                
+                try {
+                    // إنشاء نموذج مخفي للإرسال
+                    const hiddenForm = document.createElement('form');
+                    hiddenForm.action = `https://formsubmit.co/${encodeURIComponent(TARGET_EMAIL)}`;
+                    hiddenForm.method = 'POST';
+                    hiddenForm.style.display = 'none';
+
+                    // إعدادات FormSubmit المخفية (لجعل الرد صامتاً قدر الإمكان)
+                    const settings = [
+                        {name: '_subject', value: payload['_subject']},
+                        {name: '_template', value: payload['_template']},
+                        {name: '_captcha', value: 'false'},
+                        {name: '_next', value: window.location.href + '?success=true'} // العودة لنفس الصفحة بعد الإرسال
+                    ];
+
+                    settings.forEach(setting => {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = setting.name;
+                        input.value = setting.value;
+                        hiddenForm.appendChild(input);
+                    });
+
+                    // إضافة بيانات الاستبيان المنظمة للنموذج المخفي
+                    for (const key in payload) {
+                        if (!key.startsWith('_')) {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = key;
+                            input.value = payload[key];
+                            hiddenForm.appendChild(input);
+                        }
+                    }
+
+                    // إضافة النموذج للصفحة وإرساله
+                    document.body.appendChild(hiddenForm);
+                    hiddenForm.submit();
+                    
+                    // محاكاة واجهة النجاح ريثما يتم تحويل الصفحة (للأغراض الجمالية)
+                    setTimeout(() => {
+                        currentSection++;
+                        showSection(currentSection);
+                        document.querySelector('.border-b.border-gray-100 .mt-8').style.display = 'none';
+                    }, 500);
+
+                } catch (error) {
+                    console.error("خطأ الإرسال:", error);
+                    alert("حدث خطأ أثناء معالجة البيانات.");
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+            
+            // --- 🛠️ إضافة كود لمعالجة العودة بعد الإرسال بنجاح ---
+            // يقوم FormSubmit بإرجاع المستخدم للصفحة، نلتقط ذلك لنعرض له صفحة "شكراً لك"
+            if (window.location.search.includes('success=true')) {
+                 // إخفاء الأقسام وإظهار قسم النجاح فوراً
+                 setTimeout(() => {
+                     sections.forEach(sec => sec.classList.remove('active'));
+                     document.getElementById('section-success').classList.add('active');
+                     document.querySelector('.border-b.border-gray-100 .mt-8').style.display = 'none';
+                     
+                     // إزالة ?success=true من الرابط لترتيبه
+                     window.history.replaceState({}, document.title, window.location.pathname);
+                 }, 100);
+            }
+
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
